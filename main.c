@@ -1,7 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 #define CEIL_BY_8(n) n / 8 + (n % 8 ? 1 : 0)
+
+
+unsigned lg2(unsigned n) {
+
+    if(n == 0) return UINT_MAX;
+
+    unsigned i = 0;
+    while(n >>= 1) i++;
+
+    return i;
+}
+
 
 typedef unsigned char BYTE;
 
@@ -49,7 +62,12 @@ int main() {
 
     BYTE *bytes = toBytes(binStr, n);
     printArray(bytes, CEIL_BY_8(n));
-    printf("\n");
+    printf("\n\n");
+
+    printf("LOG2(x) TEST\n");
+    unsigned test[14] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64, 127, 128};
+    for(int i=0; i < 14; i++)
+        printf("n = %03u -> log2(n) = %u\n", test[i], lg2(test[i]));
 
     return EXIT_SUCCESS;
 }
