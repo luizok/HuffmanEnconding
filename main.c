@@ -2,17 +2,42 @@
 #include <stdlib.h>
 #include "minheap.h"
 #include "heapnode.h"
-#define SIZE 8
+#include <time.h>
+#include <limits.h>
+#define CEIL_BY_8(n) n / 8 + (n % 8 ? 1 : 0)
 
-typedef unsigned char byte;
 
-byte* toBytes(byte *_nums, int n) {
-    byte *bytes = calloc(n / 8, sizeof(byte));
+unsigned lg2(unsigned n) {
+
+    if(n == 0) return UINT_MAX;
+
+    unsigned i = 0;
+    while(n >>= 1) i++;
+
+    return i;
+}
+
+
+typedef unsigned char BYTE;
+
+BYTE* randBinArray(int n) {
+
+    BYTE *binStr = malloc(n * sizeof(BYTE));
+    for(int i=0; i < n; i++)
+        sprintf(&binStr[i], "%d", rand() % 2);
+
+    return binStr;
+}
+
+BYTE* toBytes(BYTE *_nums, int n) {
+    BYTE *bytes = calloc(CEIL_BY_8(n), sizeof(BYTE));
     if(bytes != NULL) {
         for(int b=0; b < n; b++) {
             bytes[b / 8] <<= 1;
             bytes[b / 8] |= _nums[b] == '1' ? 1 : 0;
         }
+
+        bytes[n / 8] <<= 8 - (n % 8);
 
         return  bytes;
     }
@@ -20,7 +45,7 @@ byte* toBytes(byte *_nums, int n) {
     return NULL;
 }
 
-void printArray(byte *arr, int n) {
+void printArray(BYTE *arr, int n) {
 
     for(int i=0; i < n; i++) {
         if(i % 16 == 0 && i != 0)
@@ -31,14 +56,20 @@ void printArray(byte *arr, int n) {
 
 int main() {
 
-    byte nums[SIZE] = "11110000";
+    srand(time(NULL));
+    int n = 1 + rand() % 256;
+    BYTE *binStr = randBinArray(n);
 
-    printArray(nums, SIZE);
+    printf("s    = %s\nn(s) = %d\nb(s) = %d\n\n", binStr, n, CEIL_BY_8(n));
+
+    BYTE *bytes = toBytes(binStr, n);
+    printArray(bytes, CEIL_BY_8(n));
     printf("\n\n");
 
-    byte *bytes = toBytes(nums, SIZE);
-    printArray(bytes, SIZE / 8);
-    printf("\n");
+    printf("LOG2(x) TEST\n");
+    unsigned test[14] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64, 127, 128};
+    for(int i=0; i < 14; i++)
+        printf("n = %03u -> log2(n) = %u\n", test[i], lg2(test[i]));
 
 //    HeapNode_t *n1 = newHeapNode('C', 100);
 //    HeapNode_t *n2 = newHeapNode('B', 50);
