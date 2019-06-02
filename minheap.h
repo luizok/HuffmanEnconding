@@ -2,6 +2,7 @@
 #define HEAP_H
 
 #include "heapnode.h"
+#include "huffman.h"
 
 typedef struct MinHeap {
     unsigned capacity;
@@ -10,7 +11,7 @@ typedef struct MinHeap {
 } MinHeap_t;
 
 MinHeap_t *newMinHeap(unsigned capacity);
-MinHeap_t *buildMinHeap(char *chars, unsigned *counts, unsigned n);
+MinHeap_t *buildMinHeap(BYTE *chars, unsigned *counts, unsigned n);
 void insertHeapNode(MinHeap_t *heap, HeapNode_t *node);
 HeapNode_t *extractMin(MinHeap_t *heap);
 void printMinHeap(MinHeap_t *heap);

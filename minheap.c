@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "minheap.h"
+#include "huffman.h"
 
 
 MinHeap_t *newMinHeap(unsigned capacity);
 void insertHeapNode(MinHeap_t *heap, HeapNode_t *node);
-MinHeap_t *buildMinHeap(char *chars, unsigned *counts, unsigned n);
+MinHeap_t *buildMinHeap(BYTE *chars, unsigned *counts, unsigned n);
 void minHeapify(MinHeap_t *heap, unsigned i);
 HeapNode_t *extractMin(MinHeap_t *heap);
 void printN(HeapNode_t *node);
@@ -40,7 +42,7 @@ void insertHeapNode(MinHeap_t *heap, HeapNode_t *node) {
     heap->nodes[i] = node;
 }
 
-MinHeap_t *buildMinHeap(char *chars, unsigned *counts, unsigned n) {
+MinHeap_t *buildMinHeap(BYTE *chars, unsigned *counts, unsigned n) {
 
     MinHeap_t *heap = newMinHeap(n);
     HeapNode_t *node = NULL;
