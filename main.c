@@ -1,58 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "minheap.h"
-#include "heapnode.h"
 #include <time.h>
 #include <limits.h>
-#define CEIL_BY_8(n) n / 8 + (n % 8 ? 1 : 0)
 
+#include "minheap.h"
+#include "heapnode.h"
+#include "huffman.h"
 
-unsigned lg2(unsigned n) {
-
-    if(n == 0) return UINT_MAX;
-
-    unsigned i = 0;
-    while(n >>= 1) i++;
-
-    return i;
-}
-
-
-typedef unsigned char BYTE;
-
-BYTE* randBinArray(int n) {
-
-    BYTE *binStr = malloc(n * sizeof(BYTE));
-    for(int i=0; i < n; i++)
-        sprintf(&binStr[i], "%d", rand() % 2);
-
-    return binStr;
-}
-
-BYTE* toBytes(BYTE *_nums, int n) {
-    BYTE *bytes = calloc(CEIL_BY_8(n), sizeof(BYTE));
-    if(bytes != NULL) {
-        for(int b=0; b < n; b++) {
-            bytes[b / 8] <<= 1;
-            bytes[b / 8] |= _nums[b] == '1' ? 1 : 0;
-        }
-
-        bytes[n / 8] <<= 8 - (n % 8);
-
-        return  bytes;
-    }
-
-    return NULL;
-}
-
-void printArray(BYTE *arr, int n) {
-
-    for(int i=0; i < n; i++) {
-        if(i % 16 == 0 && i != 0)
-            printf("\n");
-        printf("0x%02X  ", arr[i]);
-    }
-}
 
 int main() {
 
