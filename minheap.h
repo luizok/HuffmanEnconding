@@ -2,8 +2,9 @@
 #define HEAP_H
 
 #include "heapnode.h"
-#include "huffman.h"
 
+
+typedef unsigned char BYTE;
 typedef struct MinHeap {
     unsigned capacity;
     unsigned size;

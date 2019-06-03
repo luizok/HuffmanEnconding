@@ -4,6 +4,10 @@
 typedef struct HeapNode {
     unsigned char data;
     unsigned      count;
+    unsigned      code;
+    unsigned      nBits;
+   struct HeapNode *left;
+   struct HeapNode *right;
 } HeapNode_t;
 
 HeapNode_t *newHeapNode(unsigned char data, unsigned count);

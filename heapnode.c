@@ -15,6 +15,10 @@ HeapNode_t *newHeapNode(unsigned char data, unsigned count) {
     if(node != NULL) {
         node->data = data;
         node->count = count;
+        node->nBits = 0;
+        node->code = 0;
+        node->left = NULL;
+        node->right = NULL;
     }
 
     return node;
